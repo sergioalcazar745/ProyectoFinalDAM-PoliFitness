@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http:www.thymeleaf.org/extras/spring-security">
+
+<head>
+
+    <title>PoliFitness. Centro deportivo</title>
+
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" type="image/png" th:href="@{images/nuevo/icono.png}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" th:href="@{css/bootstrap.min.css}">
+
+    <!-- Font Awesome --> 
+    <link rel="stylesheet" type="text/css" th:href="@{css/all.min.css}">
+
+    <!-- Swiper -->
+    <link rel="stylesheet" type="text/css" th:href="@{css/swiper-bundle.min.css}">
+
+    <!-- VenoBox -->
+    <link rel="stylesheet" type="text/css" th:href="@{css/venobox.css}">
+
+    <!-- Jarallax -->
+    <link rel="stylesheet" type="text/css" th:href="@{css/jarallax.css}">
+
+    <!-- Pickadate -->
+    <link rel="stylesheet" type="text/css" th:href="@{js/pickadata.js/themes/default.css}">
+
+    <!-- Date Pickadate -->
+    <link rel="stylesheet" type="text/css" th:href="@{js/pickadata.js/themes/default.date.css}">
+
+    <!-- Date Pickadate -->
+    <link rel="stylesheet" type="text/css" th:href="@{js/pickadata.js/themes/default.time.css}">
+
+    <!-- Fuente -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700">
+
+    <!-- Mi estilos css -->
+    <link rel="stylesheet" type="text/css" th:href="@{css/estilos.css}">
+    
+</head>
+
+<body>
+	<!--<div class="alert alert-success"><button class="close" data-dismiss="alert"><span>&times;</span></button>Viva España</div>-->
+	<div class="alert alert-success" th:if="${success != null}" th:text="${success}"><button class="close" data-dismiss="alert"><span>&times;</span></button></div>
+	<div class="alert alert-danger" th:if="${danger != null}" th:text="${danger}"><button class="close" data-dismiss="alert"><span>&times;</span></button></div>
+	<div class="alert alert-warning" th:if="${warning != null}" th:text="${warning}"><button class="close" data-dismiss="alert"><span>&times;</span></button></div>
+	<div class="alert alert-info" th:if="${info != null}" th:text="${info}"><button class="close" data-dismiss="alert"><span>&times;</span></button></div>
+   <!-- SECCION BARRA-CONTACTO -->
+    <section id="barra-contacto" class="bg-primary text-white py-3 py-md-1 text-center">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 col-sm-6">
+                    <i class="fas fa-map-marker-alt mr-1"></i><span>Paseo de Santa Engracia, 25</span>
+                </div>
+                <div class="col-12 col-sm-6">
+                    <ul class="redes-sociales list-unstyled d-inline-flex mb-0">
+                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fab fa-google-plus"></i></a></li>
+                        <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+                    </ul>
+                </div>
+                <!--<p sec:authorize="isAuthenticated()">
+                	Usuario logueado: <span sec:authentication="name"></span> | Roles: <span sec:authentication="principal.authorities"></span>
+                </p>-->
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCION DETALLES-ENCABEZADO -->
+
+    <section id="detalles-encabezado" class="d-none d-md-block py-3">
+        <div class="container">
+            <div class="row align-items-md-center justify-content-md-between">
+                <div class="col-auto">
+                    <a href="/">
+                        <img class="img-fluid" th:src="@{images/nuevo/logo.PNG}" alt="Logo del sitio" width="200">
+                    </a>
+                </div>
+
+                <div class="col-auto ml-md-auto">
+                    <i class="fas fa-phone fa-flip-horizontal fa-2x mr-2 align-middle text-primary"></i>
+                    <span class="font-weight-bold h5">+34 681028496</span>
+                </div>
+
+                <div class="col-auto">
+                    <i class="fas fa-envelope fa-2x mr-2 align-middle text-primary"></i>
+                    <span class="font-weight-bold h5 mb-0"> polifitness@gmail.com</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MENU DE NAVEGACION -->
+    <nav id="menu-navegacion" class="navbar navbar-dark bg-secondary navbar-expand-md">
+        <div class="container pr-0">
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#menu-principal"
+                aria-expanded="false" aria-label="Boton menu principal">
+                <span class="boton-menu"></span>
+            </button>
+
+            <a sec:authorize="!isAuthenticated()" th:href="login" class="btn btn-outline-primary order-md-1">Sign in</a>
+            
+            <div sec:authorize="isAuthenticated()" class="dropdown show order-md-1">
+			  <a class="btn btn-dropdown dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			  	<!--<p sec:authorize="isAuthenticated()">
+                	<small sec:authentication="name"></small>
+                </p>-->
+			    <img th:src="@{'/upload/' + ${cliente.foto}}" class="dropdown-toggle img-fluid" width="40px" height="40px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"/>
+			  </a>	  
+			
+			  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+			  	<a class="dropdown-item" th:href="cuenta">Mi Cuenta</a>
+			    <a class="dropdown-item" th:href="@{/mis-productos}">Mis productos</a>
+			  	<form id="form-logout" th:action="@{/logout}" method="post">
+			  		<button class="dropdown-item" onclick="document.getElementById('form-logout').submit" type="submit">Sign Out</button>
+			  	</form>
+			  </div>
+			</div>
+            
+            <div class="collapse navbar-collapse" id="menu-principal">
+                <ul class="navbar-nav mt-3 mt-md-0">
+                    <li class="nav-item mb-1 mb-md-0 mr-md-1"><a href="#barra-contacto" class="nav-link active">Inicio</a></li>
+                    <li class="nav-item mb-1 mb-md-0 mr-md-1"><a href="#bienvenidos" class="nav-link">Nosotros</a></li>
+                    <li class="nav-item mb-1 mb-md-0 mr-md-1"><a href="#donde-estamos" class="nav-link">Ubicación</a></li>
+                    <li class="nav-item mb-1 mb-md-0 mr-md-0"><a href="clases" class="nav-link">Clases</a></li>
+                    <li class="nav-item mb-1 mb-md-0 mr-md-0"><a th:href="@{/alquilar}" class="nav-link">Alquiler</a></li>
+                    <li class="nav-item mb-1 mb-md-0 mr-md-0"><a href="#contacto" class="nav-link">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section id="animacion" class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide d-flex justify-content-center align-items-center"
+                style="background-image: url(images/nuevo/Gimnasio/gimnasio-1.jpg);">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-10 col-sm-11">
+                            <h2 class="display-4 text-white font-weight-bold">El deporte está al alcance de todos</h2>
+                        </div>
+                        <a href="clases" class="btn btn-primary">Apúntate</a>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide d-flex justify-content-center align-items-center"
+                style="background-image: url(images/nuevo/campo-futbol.png);">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <h2 class="display-4 text-white font-weight-bold">El deporte está al alcance de todos</h2>
+                        </div>
+                        <a th:href="@{/alquilar}" class="btn btn-primary">Alquilar una pista</a>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide d-flex justify-content-center align-items-center"
+                style="background-image: url(images/nuevo/baloncesto/baloncesto-1.jpg);">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <h2 class="display-4 text-white font-weight-bold">El deporte está al alcance de todos</h2>
+                            </h2>
+                        </div>
+                        <a th:href="@{/alquilar}" class="btn btn-primary">Alquilar una pista</a>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide d-flex justify-content-center align-items-center"
+                style="background-image: url(images/nuevo/natacion/piscina-2.jpg);">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <h2 class="display-4 text-white font-weight-bold">El deporte está al alcance de todos</h2>
+                            </h2>
+                        </div>
+                        <a th:href="@{/alquilar}" class="btn btn-primary">Alquilar una pista</a>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide d-flex justify-content-center align-items-center"
+                style="background-image: url(images/nuevo/Pádel/padel-2.jpg);">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <h2 class="display-4 text-white font-weight-bold">El deporte está al alcance de todos</h2>
+                            </h2>
+                        </div>
+                        <a th:href="@{/alquilar}" class="btn btn-primary">Alquilar una pista</a>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide d-flex justify-content-center align-items-center"
+                style="background-image: url(images/nuevo/yoga/yoga-3.jpg);">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <h2 class="display-4 text-white font-weight-bold">El deporte está al alcance de todos</h2>
+                            </h2>
+                        </div>
+                        <a href="clases" class="btn btn-primary">Apúntate</a>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide d-flex justify-content-center align-items-center"
+                style="background-image: url(images/nuevo/pilates/pilates-2.jpg);">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <h2 class="display-4 text-white font-weight-bold">El deporte está al alcance de todos</h2>
+                            </h2>
+                        </div>
+                        <a href="clases" class="btn btn-primary">Apúntate</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Botones de navegacion -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <!-- Paginacion -->
+        <div class="swiper-pagination"></div>
+    </section>
+
+    <!-- SECCION BIENVENIDOS -->
+
+    <section id="bienvenidos" class="py-5">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-12 col-lg-6">
+                    <div class="contenedor-video d-inline-block position-relative text-truncate">
+                        <img class="img-fluid" th:src="@{images/nuevo/fachada.jpg}" alt="fondo-video" />
+                        <a href="https://www.youtu.be/RJBP0q2jdA8" class="venobox-video" data-vbtype="video"><i
+                                class="fas fa-play"></i></a>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 pt-4 pt-lg-0">
+                    <h1 class="display-4 text-dark font-weight-bold mt-lg-n2">BIENVENIDO A TU
+                        <span class="text-primary">POLIDEPORTIVO</span>
+                    </h1>
+                    <h6 class="text-black-50">SOMOS PARTE DE TI</h6>
+                    <p>Proporcionamos atención nutricionista de la más alta calidad, tratamiento individualizado por los
+                        principales expertos del país y en el menor tiempo posible. Te invitamos a conocernos un poco
+                        más.</p>
+                    <a href="/" class="btn btn-primary mt-3">Leer mas</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCION TE AYUDAMOS -->
+
+    <section id="nuestra-app" class="bg-secondary text-center text-md-left py-5 jarallax" data-jarallax
+        data-speed="0.6">
+        <picture class="jarallax-img">
+            <source media="(min-width:1200px)" th:srcset="@{images/fondo-descargar-app-xl.jpg}">
+            <source media="(min-width:768px)" th:srcset="@{images/fondo-descargar-app-md.jpg}">
+            <img th:srcset="@{images/fondo-descargar-app.jpg}" alt="Fondo como podemos ayudarte" class="w-100">
+        </picture>
+        <div class="container">
+            <div class="row justify-content-md-end">
+                <div class="col-12 col-md-6">
+                    <h2 class="h1 font-weight-bold text-white">DESCUBRE Y ACCEDE A DESCUENTOS EXCLUSIVOS
+                    </h2>
+                    <h6 class="text-white-50">SOMOS PARTE DE TÍ</h6>
+                    <p class="text-white">Hemos creado una página web exclusiva para nuestro clientes. Desde donde
+                        podrás acceder a
+                        sorteos y descuentos especiales.</p>
+                    <a th:href="@{/alquilar}" class="btn btn-primary">Alquilar una pista</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PREMIOS -->
+
+    <section id="premios" class="py-5 text-center">
+        <div class="container py-5">
+            <h2 class="display-4 text-secondary font-weight-bold">NUESTRO POLIDEPORTIVO EN NÚMEROS</h2>
+            <h6 class="text-black-50">TENEMOS ALGUNOS NUMEROS QUE MOSTRARTE</h6>
+            <div class="row">
+                <div class="col-6 col-md-3 py-4">
+                    <i class="far fa-calendar-alt text-primary fa-4x pb-2"></i>
+                    <div class="h2 font-weight-bold text-secondary">
+                        <span class="counter" data-counterup-beginat="0" data-counterup-time="500">12</span>
+                    </div>
+                    <h6>Años de experiencia</h6>
+                    <div class="contador-linea"></div>
+                </div>
+                <div class="col-6 col-md-3 py-4">
+                    <i class="far fa-handshake text-primary fa-4x pb-2"></i>
+                    <div class="h2 font-weight-bold text-secondary">
+                        <span class="counter" data-counterup-beginat="0" data-counterup-time="1000">156</span>
+                    </div>
+                    <h6>Cliente satisfechos</h6>
+                    <div class="contador-linea"></div>
+                </div>
+                <div class="col-6 col-md-3 py-4">
+                    <i class="fas fa-medal text-primary fa-4x pb-2"></i>
+                    <div class="h2 font-weight-bold text-secondary">
+                        <span class="counter" data-counterup-beginat="0" data-counterup-time="1500">120</span>
+                    </div>
+                    <h6>Premio obtenidos</h6>
+                    <div class="contador-linea"></div>
+                </div>
+                <div class="col-6 col-md-3 py-4">
+                    <i class="far fa-calendar-alt text-primary fa-4x pb-2"></i>
+                    <div class="h2 font-weight-bold text-secondary">
+                        <span class="counter" data-counterup-beginat="0"
+                            data-counterup-time="2000">100</span><span>%</span>
+                    </div>
+                    <h6>Recomendado</h6>
+                    <div class="contador-linea"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NUESTRA APP -->
+
+    <section id="donde-estamos" class="bg-secondary text-center text-md-left py-5 jarallax" data-jarallax
+        data-speed="0.6">
+        <picture class="jarallax-img">
+            <!--<source media="(min-width:1200px)" srcset="images/fondo-descargar-app-xl.jpg">
+            <source media="(min-width:768px)" srcset="images/fondo-descargar-app-md.jpg">-->
+            <img th:srcset="@{images/nuevo/fachada-2.jpg}" alt="Fondo como podemos ayudarte" class="w-100">
+        </picture>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6 p-0">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3037.014028584199!2d-3.699271284350756!3d40.43068826271397!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42288c62d0f9fd%3A0xd4301f01359a9188!2sCalle%20de%20Sta%20Engracia%2C%2025%2C%2028010%20Madrid!5e0!3m2!1ses!2ses!4v1619369241193!5m2!1ses!2ses"
+                        class="w-100" height="420" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+                <div class="col-12 col-md-6 text-left pl-5">
+                    <h2 class="h1 font-weight-bold text-white">DONDE ESTAMOS</h2>
+                    <h6 class="text-white-50">EN EL CENTRO DE TODO</h6>
+                    <p class="text-white">Las instalaciones de POLIFitness S.A se encuentran ubicadas en un punto estrategico, en el centro
+                        de Madrid, equidistante a las dos vias de acceso
+                        principales a esta zona; metro Alonso Martínez y Bilbao.</p>
+                    <a href="https://www.google.com/maps/place/Calle+de+Sta+Engracia,+25,+28010+Madrid/@40.4306883,-3.6992713,17z/data=!3m1!4b1!4m5!3m4!1s0xd42288c62d0f9fd:0xd4301f01359a9188!8m2!3d40.4306842!4d-3.6970826" target="_blank" class="btn btn-primary mt-2">Ir al sitio</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACTANOS -->
+
+    <section id="contacto">
+        <header class="bg-primary text-center py-5">
+            <h2 class="display-4 font-weight-bold text-white">CONTÁCTANOS</h2>
+            <h6 class="text-white-50">ESTAMOS LISTOS PARA ENTENDERTE</h6>
+            <div class="flecha"></div>
+        </header>
+        <div class="container">
+            <div class="row py-5">
+                <div class="col-12 col-lg-6">
+                    <h2 class="font-weight-bold text-center mb-2">Detalles de contacto:</h2>
+                    <ul class="list-unstyled">
+                        <li class="d-flex border-bottom py-4">
+                            <i class="fas fa-globe fa-3x mr-4 text-primary fa-fw"></i>
+                            <div>
+                                <h5 class="font-weight-bold">Dirección:</h5>
+                                <p class="mb-0">Paseo de Santa Engracia, 25</p>
+                            </div>
+                        </li>
+                        <li class="d-flex border-bottom py-4">
+                            <i class="fas fa-mobile-alt fa-3x mr-4 text-warning fa-fw"></i>
+                            <div>
+                                <h5 class="font-weight-bold">Teléfonos:</h5>
+                                <p class="mb-0">+34 915792365</p>
+                            </div>
+                        </li>
+                        <li class="d-flex border-bottom py-4">
+                            <i class="fas fa-envelope-open fa-3x mr-4 text-danger fa-fw"></i>
+                            <div>
+                                <h5 class="font-weight-bold">Email:</h5>
+                                <p class="mb-0">polifitness@gmail.com</p>
+                            </div>
+                        </li>
+                        <li class="d-flex border-bottom py-4">
+                            <i class="fab fa-whatsapp fa-3x mr-4 text-info fa-fw"></i>
+                            <div>
+                                <h5 class="font-weight-bold">Whatsapp:</h5>
+                                <p class="mb-0">+34 681028496</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-12 col-lg-6 ">
+                    <h2 class="font-weight-bold text-center mb-5">Separa un cita:</h2>
+                    <form id="mi-formulario" action="#" class="">
+
+                        <div class="form-group form-row">
+                            <label for="nombre" class="col-form-label col-12 col-md-3">Nombre: </label>
+                            <div class="col-12 col-md-9">
+                                <input type="text" name="nombre" class="form-control" id="nombre"
+                                    placeholder="Ingrese su nombre" data-parsley-required
+                                    data-parsley-required-message="Este campo es obligatorio">
+                            </div>
+                        </div>
+                        <div class="form-group form-row">
+                            <label for="email" class="col-form-label col-12 col-md-3">Email: </label>
+                            <div class="col-12 col-md-9">
+                                <input type="text" name="email" class="form-control" id="email"
+                                    placeholder="Ingrese su email" data-parsley-required data-parsley-type="email"
+                                    data-parsley-required-message="Este campo es obligatorio"
+                                    data-parsley-type-message="Ingrese un email con un formato válido">
+                            </div>
+                        </div>
+                        <div class="form-group form-row">
+                            <label for="telefono" class="col-form-label col-12 col-md-3">Teléfono: </label>
+                            <div class="col-12 col-md-9">
+                                <input type="number" name="telefono" class="form-control" id="telefono"
+                                    placeholder="Ingrese su teléfono" data-parsley-required data-parsley-type="number"
+                                    data-parsley-length="[9, 9]"
+                                    data-parsley-type-message="Ingrese un numero de telefono válido"
+                                    data-parsley-length-message="La longitud debe ser de 9 números"
+                                    data-parsley-required-message="Este campo es obligatorio">
+                            </div>
+                        </div>
+                        <div class="form-group form-row">
+                            <label for="mensaje" class="col-form-label col-12 col-md-3">Mensaje: </label>
+                            <div class="col-12 col-md-9">
+                                <textarea name="mensaje" class="form-control" id="mensaje" rows="5"
+                                    placeholder="Ingrese su mensaje" data-parsley-required
+                                    data-parsley-required-message="Este campo es obligatorio">
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="form-group form-row">
+                            <label for="mensaje" class="col-form-label col-12 col-md-3">Fecha: </label>
+                            <div class="col-12 col-md-9">
+                                <div class="input-group">
+                                    <input type="date" id="fecha-cita" name="fecha-cita" class="form-control datepicker"
+                                        data-parsley-required data-parsley-required-message="Este campo es obligatorio"
+                                        data-parsley-errors-container=".error-fecha-cita">
+                                    <label class="input-group-append input-group-cita" for="fecha-cita">
+                                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                    </label>
+                                </div>
+                                <div class="error-fecha-cita"></div>
+                            </div>
+                        </div>
+                        <div class="form-group form-row">
+                            <label for="hora" class="col-form-label col-12 col-md-3">Hora: </label>
+                            <div class="col-12 col-md-9">
+                                <div class="input-group">
+                                    <input type="time" id="hora" name="hora" class="form-control timepicker"
+                                        data-parsley-required data-parsley-required-message="Este campo es obligatorio"
+                                        data-parsley-errors-container=".error-fecha-hora">
+                                    <label class="input-group-append input-group-cita" for="hora">
+                                        <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                                    </label>
+                                </div>
+                                <div class="error-fecha-hora"></div>
+                            </div>
+                        </div>
+                        <div class="form-group form-row justify-content-md-end">
+                            <div class="col-12 col-md-9">
+                                <button type="submit" class="btn btn-primary btn-block btn-lg">Enviar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PIE DE PÁGINA -->
+
+    <footer id="pie-pagina" class="bg-dark text-truncate">
+        <div class="container">
+            <div class="row align-items-md-center">
+                <div class="columna-inclinada col-12 col-md-6 col-xl-5 py-2">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2 class="h1 font-weight-bold text-light">Soporte</h2>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-briefcase-medical fa-4x text-black-50"></i>
+                        </div>
+                        <div class="col-auto text-black-50">
+                            <h6 class="h3">+34 915792365</h6>
+                            <p>Servicio de ayuda esta disponible 24h/7.</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="lista-pie-pagina"
+                    class="col-12 col-md-6 col-xl-7 py-2 text-center text-md-right text-xl-right">
+                    <ul class="list-unstyled d-inline-flex small text-uppercase">
+                        <li><a href="#">Inicio</a></li>
+                        <li><a href="#">Nosotros</a></li>
+                        <li><a href="#">Politicas de privacidad</a></li>
+                    </ul>
+                    <p class="text-white">&copy;2021. Todos los derechos reservados</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script th:src="@{js/jquery-3.6.0.min.js}"></script>
+    <script th:src="@{js/popper.min.js}"></script>
+    <script th:src="@{js/bootstrap.min.js}"></script>
+
+    <!-- JS Swiper -->
+    <script th:src="@{js/swiper-bundle.min.js}"></script>
+
+    <!-- VenoBox -->
+    <script type="text/javascript" th:src="@{js/venobox.min.js}"></script>
+
+    <!-- Jarallax -->
+    <script type="text/javascript" th:src="@{js/jarallax.min.js}"></script>
+
+    <!-- PictureFill -->
+    <script type="text/javascript" th:src="@{js/picturefill.min.js}"></script>
+
+    <!-- WayPoint -->
+    <script type="text/javascript" th:src="@{js/jquery.waypoints.min.js}"></script>
+
+    <!-- CounterUp -->
+    <script type="text/javascript" th:src="@{js/jquery.counterup.min.js}"></script>
+
+    <!-- Picker(Selector de fecha y hora) -->
+    <script type="text/javascript" th:src="@{js/pickadata.js/picker.js}"></script>
+
+    <!-- Picker(Selector de fecha) -->
+    <script type="text/javascript" th:src="@{js/pickadata.js/picker.date.js}"></script>
+
+    <!-- PickerTime(Selector hora y minutos) -->
+    <script type="text/javascript" th:src="@{js/pickadata.js/picker.time.js}"></script>
+
+    <!-- Parsley (Crea validacion formularios) -->
+    <script type="text/javascript" th:src="@{js/parsley.min.js}"></script>
+    <script type="text/javascript" th:src="@{js/parsley.es.js}"></script>
+
+    <!-- Stickit -->
+    <script type="text/javascript" th:src="@{js/jquery.stickit.min.js}"></script>
+
+    <!-- PageToScroll(Efecto scroll entre las secciones) -->
+    <script type="text/javascript" th:src="@{js/jquery.malihu.PageScroll2id.min.js}"></script>
+
+    <!-- Archivo para confiugurar mis scripts -->
+    <script th:src="@{js/mis-scripts.js}"></script>
+</body>
+
+</html>

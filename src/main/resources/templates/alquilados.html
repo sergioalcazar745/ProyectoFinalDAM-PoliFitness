@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <title>PoliFitness. Centro deportivo</title>
+
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" type="image/png" th:href="@{/images/nuevo/icono.png}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+
+    <!-- Font Awesome --> 
+    <link rel="stylesheet" type="text/css" th:href="@{/css/all.min.css}">
+
+    <!-- Swiper -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/swiper-bundle.min.css}">
+
+    <!-- VenoBox -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/venobox.css}">
+
+    <!-- Jarallax -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/jarallax.css}">
+
+    <!-- Pickadate -->
+    <link rel="stylesheet" type="text/css" th:href="@{/js/pickadata.js/themes/default.css}">
+
+    <!-- Date Pickadate -->
+    <link rel="stylesheet" type="text/css" th:href="@{/js/pickadata.js/themes/default.date.css}">
+
+    <!-- Date Pickadate -->
+    <link rel="stylesheet" type="text/css" th:href="@{/js/pickadata.js/themes/default.time.css}">
+
+    <!-- Fuente -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700">
+
+    <!-- Mi estilos css -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/estilos.css}">
+</head>
+<body>
+	
+	<nav id="menu-navegacion"
+		class="navbar navbar-dark bg-secondary navbar-expand-md">
+		<div class="container pr-0">
+			<div class="col-auto">
+				<a href="/"> <img class="img-fluid"
+					th:src="@{/images/nuevo/logo-blanco.png}" alt="Logo del sitio"
+					width="200">
+				</a>
+			</div>
+
+			<a sec:authorize="!isAuthenticated()" th:href="login"
+				class="btn btn-outline-primary order-md-1">Sign in</a>
+
+			<div sec:authorize="isAuthenticated()"
+				class="dropdown show order-md-1">
+				<a class="btn btn-dropdown dropdown-toggle" href="#" role="button"
+					id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false"> <!--<p sec:authorize="isAuthenticated()">
+                	<small sec:authentication="name"></small>
+                </p>--> <img th:src="@{'/upload/' + ${cliente.foto}}"
+					class="dropdown-toggle img-fluid" width="40px" height="40px"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
+				</a>
+
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+			  	<a class="dropdown-item" th:href="cuenta">Mi Cuenta</a>
+			    <a class="dropdown-item" th:href="@{/mis-productos}">Mis productos</a>
+			  	<form id="form-logout" th:action="@{/logout}" method="post">
+			  		<button class="dropdown-item" onclick="document.getElementById('form-logout').submit" type="submit">Sign Out</button>
+			  	</form>
+			  </div>
+			</div>
+		</div>
+	</nav>
+	
+	<div class="alert alert-warning" th:if="${warning != null}" th:text="${warning}"><button class="close" data-dismiss="alert"><span>&times;</span></button></div>
+	<!--<h1 th:text="${pista.tipo.toUpperCase}" class="text-dark text-center my-4 font-weight-bold display-4 border-bottom w-50 d-block mx-auto"></h1>-->
+	
+	<section th:if="${pista.tipo == 'fútbol'}" class="">
+	    <div class="container">
+	    	<div class="row text-dark py-2">
+	    		<div class="col-12 col-md-6">
+	    			<img class="img-fluid" th:src="@{/images/nuevo/futbol7/futbol7.jpg}" alt="body-pump"/>
+	    		</div>
+	    		<div class="col-12 col-md-6 text-center">
+	    			<h1 class="text-center font-weight-bold mt-4">INFOR<span class="text-primary">MACIÓN</span></h1>
+	    			<p class="text-left my-4">El pago se realizará mediante tarjeta bancaria. En los supuestos de reservas de unidades deportivas, el usuario deberá imprimir los justificantes de reserva y de pago, para su presentación en el control de acceso, en el momento de la prestación del servicio.</p>
+	    		</div>
+	    	</div>
+	    </div>
+    </section>
+    <section th:if="${pista.tipo == 'fútbol'}" class="bg-secondary">
+	    <div class="container">
+	    	<div class="row text-white py-2">
+	    		<div class="col-12 col-md-6 text-center">
+	    			<h1 class="text-center font-weight-bold mt-4">UBICA<span class="text-primary">CIÓN</span></h1>
+	    			<p class="text-left my-4">Situado a las afueras de Polifitness a escasos 3 min andando, es un campo que ha sido renovado recientemente y posee dos campos de fútbol 7 con césped de última generación a estrenar, vestuarios, cafetería y fácil aparcamiento.</p>
+	    		</div>
+	    		<div class="col-12 col-md-6">
+	    			<img class="img-fluid" th:src="@{/images/nuevo/futbol7/futbol7-2.jpg}" alt="body-pump"/>
+	    		</div>	    		
+	    	</div>
+	    </div>
+    </section>
+    
+    <section th:if="${pista.tipo == 'baloncesto'}" class="">
+	    <div class="container">
+	    	<div class="row text-dark py-2">
+	    		<div class="col-12 col-md-6">
+	    			<img class="img-fluid" th:src="@{/images/nuevo/baloncesto/baloncesto-1.jpg}" alt="body-pump"/>
+	    		</div>
+	    		<div class="col-12 col-md-6 text-center">
+	    			<h1 class="text-center font-weight-bold mt-4">INFOR<span class="text-primary">MACIÓN</span></h1>
+	    			<p class="text-left my-4">El pago se realizará mediante tarjeta bancaria. En los supuestos de reservas de unidades deportivas, el usuario deberá imprimir los justificantes de reserva y de pago, para su presentación en el control de acceso, en el momento de la prestación del servicio.</p>
+	    		</div>
+	    	</div>
+	    </div>
+    </section>
+    <section th:if="${pista.tipo == 'baloncesto'}" class="bg-secondary">
+	    <div class="container">
+	    	<div class="row text-white py-2">
+	    		<div class="col-12 col-md-6 text-center">
+	    			<h1 class="text-center font-weight-bold mt-4">UBICA<span class="text-primary">CIÓN</span></h1>
+	    			<p class="text-left my-4">Situado a las afueras de Polifitness a escasos 3 min andando, es un campo que ha sido renovado recientemente y posee dos campos de fútbol 7 con césped de última generación a estrenar, vestuarios, cafetería y fácil aparcamiento.</p>
+	    		</div>
+	    		<div class="col-12 col-md-6">
+	    			<img class="img-fluid" th:src="@{/images/nuevo/baloncesto/baloncesto-3.jpg}" alt="body-pump"/>
+	    		</div>	    		
+	    	</div>
+	    </div>
+    </section>
+    
+    <section th:if="${pista.tipo == 'padel'}" class="my-3">
+	    <div class="container">
+	    	<div class="row text-dark py-2">
+	    		<div class="col-12 col-md-6">
+	    			<img class="img-fluid" th:src="@{/images/nuevo/Pádel/padel-2.jpg}" alt="body-pump"/>
+	    		</div>
+	    		<div class="col-12 col-md-6 text-center">
+	    			<h1 class="text-center font-weight-bold mt-4">INFOR<span class="text-primary">MACIÓN</span></h1>
+	    			<p class="text-left my-4">El pago se realizará mediante tarjeta bancaria. En los supuestos de reservas de unidades deportivas, el usuario deberá imprimir los justificantes de reserva y de pago, para su presentación en el control de acceso, en el momento de la prestación del servicio.</p>
+	    		</div>
+	    	</div>
+	    </div>
+    </section>
+    <section th:if="${pista.tipo == 'padel'}" class="bg-secondary">
+	    <div class="container">
+	    	<div class="row text-white py-2">
+	    		<div class="col-12 col-md-6 text-center">
+	    			<h1 class="text-center font-weight-bold mt-4">UBICA<span class="text-primary">CIÓN</span></h1>
+	    			<p class="text-left my-4">Situado a las afueras de Polifitness a escasos 3 min andando, es un campo que ha sido renovado recientemente y posee dos campos de fútbol 7 con césped de última generación a estrenar, vestuarios, cafetería y fácil aparcamiento.</p>
+	    		</div>
+	    		<div class="col-12 col-md-6">
+	    			<img class="img-fluid" th:src="@{/images/nuevo/Pádel/padel-3.jpg}" alt="body-pump"/>
+	    		</div>	    		
+	    	</div>
+	    </div>
+    </section>
+	
+	<section id="datos-bancarios" class="my-5">
+		<div class="container">
+			<div class="row">
+				<div class="col-6">
+				<h1 class="text-dark text-center d-block mx-auto">Datos <span class="text-primary">bancarios</span></h1>
+					<form th:action="@{/alquilado}" method="post" th:object="${tarjeta}" class="py-3 pl-3 mb-3" id="form-alquilar">
+						<h5 class="font-weight-bold">Tarjeta de crédito o débito</h5>
+						
+						<div class="alert alert-danger mt-2" th:if="${danger != null}" th:text="${danger}"><button class="close" data-dismiss="alert"><span>&times;</span></button></div>
+		
+		                <div class="form-group row mt-3">
+		                    <div class="col-12">
+		                        <label for="nombre" class="font-weight-bold">Número de la tarjeta: </label>
+		                        <div class="input-group">
+		                            <input type="number" name="numero" class="form-control" id="nombre" th:field="*{numero}">
+		                        </div>
+		                        <div th:if="${#fields.hasErrors('numero')}" th:errors="*{numero}" class="text-danger"></div>
+		                   </div>
+		               </div>
+		               
+		               <div class="form-group row mt-3">
+		                    <div class="col-12">
+		                        <label for="nombre" class="font-weight-bold">Nombre en la tarjeta: </label>
+		                        <div class="input-group">
+		                            <input type="text" name="nombre" class="form-control" id="nombre" th:field="*{nombre}">
+		                        </div>
+		                        <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="text-danger"></div>
+		                   </div>
+		               </div>
+		               
+		               <div class="form-group row mt-3">
+			               <div class="col-10">
+			               <label class="font-weight-bold">Fecha de vencimiento: </label>
+				               <select class="form-select form-select-sm mx-2" aria-label=".form-select-sm example" name="dia" th:field="*{dia}">
+								  <option selected value="01">01</option>
+								  <option value="02">02</option>
+								  <option value="03">03</option>
+								  <option value="04">04</option>
+								  <option value="05">05</option>
+								  <option value="06">06</option>
+								  <option value="07">07</option>
+								  <option value="08">08</option>
+								  <option value="09">09</option>
+								  <option value="10">10</option>
+								  <option value="11">11</option>
+								  <option value="12">12</option>
+								</select>
+								<select class="form-select form-select-sm" aria-label=".form-select-sm example" name="año" th:field="*{año}">
+								  <option selected value="2021">2021</option>
+								  <option value="2022">2022</option>
+								  <option value="2023">2023</option>
+								  <option value="2024">2024</option>
+								  <option value="2025">2025</option>
+								  <option value="2026">2026</option>
+								  <option value="2027">2027</option>
+								  <option value="2028">2028</option>
+								  <option value="2029">2029</option>
+								  <option value="2030">2030</option>
+								  <option value="2031">2031</option>
+								  <option value="2032">2032</option>
+								  <option value="2033">2033</option>
+								  <option value="2034">2034</option>
+								  <option value="2035">2035</option>
+								  <option value="2036">2036</option>
+								  <option value="2037">2037</option>
+								  <option value="2038">2038</option>
+								</select>
+					   		</div>
+		               </div>
+		               
+		               <h5 class="font-weight-bold">Requisitos:</h5>
+		               
+		               <div class="form-group row mt-3">
+			               <div class="col-12">
+				               <label for="hora">Hora: </label>
+				               <div class="input-group">
+		                           <input type="time" id="hora" name="hora" class="form-control timepicker" th:field="*{hora}">
+		                           <label class="input-group-append input-group-cita" for="hora">
+		                               <span class="input-group-text"><i class="fas fa-clock"></i></span>
+		                           </label>
+		                       </div>
+		                       <div th:if="${#fields.hasErrors('hora')}" th:errors="*{hora}" class="text-danger"></div>
+	                       </div>
+		               </div>
+		               <div class="form-group row mt-3">
+		               		<div class="col-12">
+				               <label for="fecha">Fecha: </label>
+					         	   <div class="input-group">
+				                        <input type="date" id="fecha" name="fecha" class="form-control datepicker" th:field="*{fecha}">
+				                        <label class="input-group-append input-group-cita" for="fecha">
+				                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+				                        </label>
+				                   </div>
+				                   <div th:if="${#fields.hasErrors('fecha')}" th:errors="*{fecha}" class="text-danger"></div>
+				             </div>
+		               </div>
+		               
+		               <div class="form-group row mt-3">
+		               	 <div class="col-12">
+			               	 <label class="font-weight-bold">Numero de horas: </label>
+					           <select class="form-select form-select-sm mx-2"  onchange="calcularPrecio(value);" aria-label=".form-select-sm example" name="dia" id="" th:field="*{horas}">
+								  <option selected value="2">2</option>
+								  <option value="3">3</option>
+								  <option value="4">4</option>
+								  <option value="5">5</option>
+								</select>
+						 </div>
+		               </div>
+		               		
+		               <div class="form-group row mt-3 justify-content-center" id="precioAlquiler">
+							<div class="col-12">
+		               			<p class="h4">Precio: <span th:if="${pista.tipo == 'fútbol'}" class="precio h3 font-weight-bold">40</span>
+			               			<span th:if="${pista.tipo == 'baloncesto'}" class="precio">34</span>
+			               			<span th:if="${pista.tipo == 'padel'}" class="precio">30</span> <span class="font-weight-bold h3">€</span></p>
+		               		</div>	
+					   </div>
+		               
+		               <input type="hidden" value="" name="precio" id="precioInput"/>
+		               <input type="hidden" th:value="${pista.tipo}" name="tipo"/>
+		               <div class="form-group row mt-3 justify-content-center">
+							<input type="submit" class="btn btn-secondary" value="Alquilar">	
+					   </div>
+					</form>
+				</div>
+				<div id="informacion" class="col-6 pl-5">
+				<h1 class="text-dark text-center">Normas</h1>
+					<div class="pt-2">
+						<p>El campo no se podrá alquilar ni más ni menos de 3 horas
+						Si quieren la grabacion del partido deberán comunicarlo al entrar en el polideportivo.
+						Se recomiendo usar botas adecuadas al césped.<br>
+						Un máximo de 14 personas.</p>					
+					</div>
+					<div th:if="${alquiladas.size > 0}" class="mt-5">
+						<h4>HORARIO DE LAS PISTA ALQUILADAS</h4>
+						<table class="table">
+						  <thead class="thead-dark">
+						    <tr>
+						      <th scope="col">#</th>
+						      <th scope="col">Fecha</th>
+						      <th scope="col">Hora de inicio</th>
+						      <th scope="col">Hora final</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						    <tr th:each="al: ${alquiladas}">
+						      <th scope="row">1</th>
+						      <td th:text="${al.fecha}"></td>
+						      <td th:text="${al.hora_inicio}"></td>
+						      <td th:text="${al.hora_final}"></td>
+						    </tr>
+						  </tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	<footer id="pie-pagina" class="bg-dark text-truncate">
+        <div class="container">
+            <div class="row align-items-md-center">
+                <div class="columna-inclinada col-12 col-md-6 col-xl-5 py-2">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2 class="h1 font-weight-bold text-light">Soporte</h2>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-briefcase-medical fa-4x text-black-50"></i>
+                        </div>
+                        <div class="col-auto text-black-50">
+                            <h6 class="h3">+34 915792365</h6>
+                            <p>Servicio de ayuda esta disponible 24h/7.</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="lista-pie-pagina"
+                    class="col-12 col-md-6 col-xl-7 py-2 text-center text-md-right text-xl-right">
+                    <ul class="list-unstyled d-inline-flex small text-uppercase">
+                        <li><a href="#">Inicio</a></li>
+                        <li><a href="#">Nosotros</a></li>
+                        <li><a href="#">Politicas de privacidad</a></li>
+                    </ul>
+                    <p class="text-white">&copy;2021. Todos los derechos reservados</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+	
+	<script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+    <script th:src="@{/js/popper.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+
+    <!-- JS Swiper -->
+    <script th:src="@{/js/swiper-bundle.min.js}"></script>
+
+    <!-- VenoBox -->
+    <script type="text/javascript" th:src="@{/js/venobox.min.js}"></script>
+
+    <!-- Jarallax -->
+    <script type="text/javascript" th:src="@{/js/jarallax.min.js}"></script>
+
+    <!-- PictureFill -->
+    <script type="text/javascript" th:src="@{/js/picturefill.min.js}"></script>
+
+    <!-- WayPoint -->
+    <script type="text/javascript" th:src="@{/js/jquery.waypoints.min.js}"></script>
+
+    <!-- CounterUp -->
+    <script type="text/javascript" th:src="@{/js/jquery.counterup.min.js}"></script>
+
+    <!-- Picker(Selector de fecha y hora) -->
+    <script type="text/javascript" th:src="@{/js/pickadata.js/picker.js}"></script>
+
+    <!-- Picker(Selector de fecha) -->
+    <script type="text/javascript" th:src="@{/js/pickadata.js/picker.date.js}"></script>
+
+    <!-- PickerTime(Selector hora y minutos) -->
+    <script type="text/javascript" th:src="@{/js/pickadata.js/picker.time.js}"></script>
+
+    <!-- Parsley (Crea validacion formularios) -->
+    <script type="text/javascript" th:src="@{/js/parsley.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/parsley.es.js}"></script>
+
+    <!-- Stickit -->
+    <script type="text/javascript" th:src="@{/js/jquery.stickit.min.js}"></script>
+
+    <!-- PageToScroll(Efecto scroll entre las secciones) -->
+    <script type="text/javascript" th:src="@{/js/jquery.malihu.PageScroll2id.min.js}"></script>
+
+    <!-- Archivo para confiugurar mis scripts -->
+    <script th:src="@{/js/mis-scripts.js}"></script>
+    
+    <!--<script type="text/javascript">
+	    function cargarFechas(){
+	    	//alert("Que dices")
+	    	
+	    	var token = $('#_csrf').attr('content');
+        	var header = $('#_csrf_header').attr('content');
+	    	
+	    	var params = {};
+			params["fecha"] = $("#fecha").val();
+	    	
+	    	$.ajax({
+	            type: "GET",
+	            //contentType: 'application/json',
+	            url: "listaPista",
+	            
+	            data: {
+	            	"fecha" : $("#fecha").val(),
+	            },
+	            //data: JSON.stringify(params),
+	            //dataType: 'text',
+	            success: function (data) {
+	            	alert("LO CONSEGUÍ")
+	            },
+	            error: function (e) {
+	                alert("FRACASÉ")
+	            }
+	        });
+    		 
+	    }
+    </script>-->
+</body>
+</html>

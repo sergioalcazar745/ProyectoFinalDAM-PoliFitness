@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<title>PoliFitness. Centro deportivo</title>
+
+<!-- Required meta tags -->
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="shortcut icon" type="image/png"
+	th:href="@{images/nuevo/icono.png}">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{css/bootstrap.min.css}">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" type="text/css" th:href="@{css/all.min.css}">
+
+<!-- Swiper -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{css/swiper-bundle.min.css}">
+
+<!-- VenoBox -->
+<link rel="stylesheet" type="text/css" th:href="@{css/venobox.css}">
+
+<!-- Jarallax -->
+<link rel="stylesheet" type="text/css" th:href="@{css/jarallax.css}">
+
+<!-- Pickadate -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{js/pickadata.js/themes/default.css}">
+
+<!-- Date Pickadate -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{js/pickadata.js/themes/default.date.css}">
+
+<!-- Date Pickadate -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{js/pickadata.js/themes/default.time.css}">
+
+<!-- Fuente -->
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Lato:400,700">
+
+<!-- Mi estilos css -->
+<link rel="stylesheet" type="text/css" th:href="@{css/estilos.css}">
+<link rel="stylesheet" type="text/css" th:href="@{css/estilos-cuenta.css}">
+</head>
+
+<body>
+
+	<nav id="menu-navegacion"
+		class="navbar navbar-dark bg-secondary navbar-expand-md">
+		<div class="container pr-0">
+			<div class="col-auto">
+				<a href="/"> <img class="img-fluid"
+					th:src="@{images/nuevo/logo-blanco.png}" alt="Logo del sitio"
+					width="200">
+				</a>
+			</div>
+
+			<a sec:authorize="!isAuthenticated()" th:href="login"
+				class="btn btn-outline-primary order-md-1">Sign in</a>
+
+			<div sec:authorize="isAuthenticated()"
+				class="dropdown show order-md-1">
+				<a class="btn btn-dropdown dropdown-toggle" href="#" role="button"
+					id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false"> <!--<p sec:authorize="isAuthenticated()">
+                	<small sec:authentication="name"></small>
+                </p>--> <img th:src="@{'/upload/' + ${cliente.foto}}"
+					class="dropdown-toggle img-fluid" width="40px" height="40px"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
+				</a>
+
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+			  	<a class="dropdown-item" th:href="cuenta">Mi Cuenta</a>
+			    <a class="dropdown-item" th:href="@{/mis-productos}">Mis productos</a>
+			  	<form id="form-logout" th:action="@{/logout}" method="post">
+			  		<button class="dropdown-item" onclick="document.getElementById('form-logout').submit" type="submit">Sign Out</button>
+			  	</form>
+			  </div>
+			</div>
+		</div>
+	</nav>
+	
+	<div class="alert alert-success" th:if="${success != null}" th:text="${success}"><button class="close" data-dismiss="alert"><span>&times;</span></button></div>
+	<div class="alert alert-warning" th:if="${warning != null}" th:text="${warning}"><button class="close" data-dismiss="alert"><span>&times;</span></button></div>
+	<h1 class="text-dark display-4 font-weight-bold text-center my-3">MIS PRODUCTOS:</h1>
+	
+	<section class="">
+		<div class="container">
+		<h2 class="font-weight-bold">CLASES</h2>
+			<div th:if="${cliente.deportes.size > 0}" class="row ">
+				<div class="col-12 border rounded mb-2 bg-light" th:each="depor: ${cliente.deportes}">
+					<div class="row">
+						<div class="col-3 m-auto">
+							<img th:src="@{/images/clases/} + ${depor.nombre} + .png" class="img-fluid my-2" width="250px" height="200px"/>
+						</div>
+						<div class="col-8">
+						<form th:action="@{/desapuntarme}" method="post">
+							<h2 th:if="${depor.nombre == 'body pump'}" class="text-center my-3 font-weight-bold">BODY <span class="text-primary"> PUMP</span></h2>
+							<h2 th:if="${depor.nombre == 'body combat'}" class="text-center my-3 font-weight-bold">BODY <span class="text-primary"> COMBAT</span></h2>
+							<h2 th:if="${depor.nombre == 'ciclo indoor'}" class="text-center my-3 font-weight-bold">CICLO <span class="text-primary"> INDOOR</span></h2>
+							<h2 th:if="${depor.nombre == 'cross fit'}" class="text-center my-3 font-weight-bold">CROSS <span class="text-primary"> FIT</span></h2>
+							<h2 th:if="${depor.nombre == 'pilates'}" class="text-center my-3 text-primary font-weight-bold">PILATES</h2>
+							<p th:if="${depor.nombre == 'body pump'}">Programa de entrenamiento dirigido a la mejora de la fuerza resistencia en el que trabajaras todos los grupos musculares al ritmo de los éxitos musicales del momento.</p>
+							<p th:if="${depor.nombre == 'body combat'}">Programa de entrenamiento cardiovascular inspirado en las artes marciales. Si quieres liberar adrenalina al ritmo de los mejores éxitos del momento, ¡ésta es tu actividad! Combina movimientos del Karate, Boxeo, Tae Kwon Do, TaiChi y Muay Thai.</p>
+							<p th:if="${depor.nombre == 'ciclo indoor'}">Programa de entrenamiento que se realiza sobre una bicicleta estática siguiendo el ritmo de la música, cuyo trabajo cardiovascular de alta intensidad te permite consumir hasta 650 calorías en una sola sesión.</p>
+							<p th:if="${depor.nombre == 'cross fit'}">Programa de entrenamiento dirigido a la mejora de la fuerza resistencia en el que trabajaras todos los grupos musculares al ritmo de los éxitos musicales del momento.</p>
+							<p th:if="${depor.nombre == 'pilates'}">Programa de entrenamiento físico y mental en el que trabajas la postura corporal, el equilibrio y la fuerza combinándolo con la respiración y la relajación.</p>
+							
+							<p class="font-weight-bold">Días de la semana: <span th:if="${depor.dias == 'M-J'}" class="font-weight-normal">Martes y jueves</span>
+																<span th:if="${depor.dias == 'L-X'}" class="font-weight-normal">Lunes y Miercoles</span>
+																<span th:if="${depor.dias == 'L-J'}" class="font-weight-normal">Lunes y Jueves</span>
+																<span th:if="${depor.dias == 'X-V'}" class="font-weight-normal">Miércoles y Viernes</span></p>
+							
+							<p class="font-weight-bold">Hora: <span th:text="${depor.hora}" class="font-weight-normal"></span> <span class="font-weight-normal">horas</span><p>
+							
+							<p class="font-weight-bold">Aforo: <span th:text="${depor.aforo}" class="font-weight-normal"></span> <span class="font-weight-normal">personas</span><p>
+							
+							<input type="hidden" th:value="${depor.nombre}" name="nombreDeporte"/>
+							
+							<div class="d-flex justify-content-between">
+								<p class="">
+									<button type="submit" class="btn btn-danger">Desapuntarme</button>
+								</p>
+								<p class="h4 text-dark font-weight-bold">Precio: <span th:if="${depor.precio == 23.5}" class="font-weight-normal">23.50</span>	
+																											<span th:if="${depor.precio != 23.5}" th:text="${depor.precio}" class="font-weight-normal"></span> <span class="font-weight-normal">€</span><p>
+								<a class="btn btn-info" th:href="@{'mi-producto/' + ${depor.nombre} + '/nada'(format=pdf)}">Factura</a>
+							</div>
+						</form>																
+						</div>
+					</div>
+				</div>
+			</div>
+			<div th:if="${cliente.deportes.size == 0}" class="row bg-light border rounded mb-2">
+				<p  class="justify-content-center h3 p-3">NO ESTAS APUNTADO A NINGUNA CLASE</p>
+			</div>
+		<h2 class="font-weight-bold mt-4">ALQUILER</h2>
+		<div th:if="${cliente.alquila.size > 0}" class="row">
+				<div class="col-12 border rounded mb-2 bg-light" th:each="al: ${cliente.alquila}">
+					<div class="row" th:each="detalle: ${al.detalles}">
+						<div class="col-3 m-auto">
+							<img th:src="@{/images/alquilar/} + ${detalle.pista.tipo} + .jpg" class="img-fluid my-2" width="250px" height="200px"/>
+						</div>
+						<div class="col-8">
+						<form th:action="@{/cancelar}" method="post">
+							<h2 th:if="${detalle.pista.tipo == 'fútbol'}" class="text-center my-3 font-weight-bold">FÚT<span class="text-primary">BOL</span></h2>
+							<h2 th:if="${detalle.pista.tipo == 'padel'}" class="text-center my-3 font-weight-bold">PÁ<span class="text-primary">DEL</span></h2>
+							<h2 th:if="${detalle.pista.tipo == 'baloncesto'}" class="text-center my-3 font-weight-bold">BALON<span class="text-primary">CESTO</span></h2>
+							<p th:if="${detalle.pista.tipo == 'fútbol'}">Programa de entrenamiento dirigido a la mejora de la fuerza resistencia en el que trabajaras todos los grupos musculares al ritmo de los éxitos musicales del momento.</p>
+							<p th:if="${detalle.pista.tipo == 'baloncesto'}">Programa de entrenamiento cardiovascular inspirado en las artes marciales. Si quieres liberar adrenalina al ritmo de los mejores éxitos del momento, ¡ésta es tu actividad! Combina movimientos del Karate, Boxeo, Tae Kwon Do, TaiChi y Muay Thai.</p>
+							<p th:if="${detalle.pista.tipo == 'padel'}">Programa de entrenamiento que se realiza sobre una bicicleta estática siguiendo el ritmo de la música, cuyo trabajo cardiovascular de alta intensidad te permite consumir hasta 650 calorías en una sola sesión.</p>
+							
+							<p class="font-weight-bold">Hora de inicio: <span th:text="${detalle.hora_inicio}" class="font-weight-normal"></span> <span class="font-weight-normal">horas</span></p>
+							
+							<p class="font-weight-bold">Hora final: <span th:text="${detalle.hora_final}" class="font-weight-normal"></span> <span class="font-weight-normal">horas</span><p>
+							
+							<p class="font-weight-bold">Fecha: <span th:text="${detalle.fecha}" class="font-weight-normal"></span><p>
+							
+							<p th:if="${detalle.pista.tipo == 'fútbol'}" class="font-weight-bold">Aforo: <span class="font-weight-normal">14 personas</span></p>
+							<p th:if="${detalle.pista.tipo == 'baloncesto'}" class="font-weight-bold">Aforo: <span class="font-weight-normal">10 personas</span></p>
+							<p th:if="${detalle.pista.tipo == 'padel'}" class="font-weight-bold">Aforo: <span class="font-weight-normal">4 personas</span></p>
+							<input type="hidden" th:value="${al.id}" name="id"/>
+							<div class="d-flex justify-content-between">
+								<p class="">
+									<button type="submit" class="btn btn-danger">Cancelar</button>
+								</p>
+								<p class="h4 text-dark font-weight-bold">Precio: <span th:text="${al.precio}" class="font-weight-normal"></span> <span class="font-weight-normal"> €</span></p>
+								<a class="btn btn-info" th:href="@{'mi-producto/' + ${detalle.pista.tipo} + '/' + ${detalle.fecha.toString}(format=pdf)}">Factura</a>
+							</div>
+						</form>	
+						</div>
+					</div>
+				</div>
+			</div>
+			<div th:if="${cliente.alquila.size == 0}" class="row bg-light border rounded mb-2">
+				<p  class="justify-content-center h3 p-3">NO TIENES NINGÚN ALQUILER</p>
+			</div>
+		</div>	
+	</section>
+	
+	<footer id="pie-pagina" class="bg-dark text-truncate mt-5">
+        <div class="container">
+            <div class="row align-items-md-center">
+                <div class="columna-inclinada col-12 col-md-6 col-xl-5 py-2">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2 class="h1 font-weight-bold text-light">Soporte</h2>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-briefcase-medical fa-4x text-black-50"></i>
+                        </div>
+                        <div class="col-auto text-black-50">
+                            <h6 class="h3">+34 915792365</h6>
+                            <p>Servicio de ayuda esta disponible 24h/7.</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="lista-pie-pagina"
+                    class="col-12 col-md-6 col-xl-7 py-2 text-center text-md-right text-xl-right">
+                    <ul class="list-unstyled d-inline-flex small text-uppercase">
+                        <li><a href="#">Inicio</a></li>
+                        <li><a href="#">Nosotros</a></li>
+                        <li><a href="#">Politicas de privacidad</a></li>
+                    </ul>
+                    <p class="text-white">&copy;2021. Todos los derechos reservados</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+	
+	<script th:src="@{js/jquery-3.6.0.min.js}"></script>
+    <script th:src="@{js/popper.min.js}"></script>
+    <script th:src="@{js/bootstrap.min.js}"></script>
+
+    <!-- JS Swiper -->
+    <script th:src="@{js/swiper-bundle.min.js}"></script>
+
+    <!-- VenoBox -->
+    <script type="text/javascript" th:src="@{js/venobox.min.js}"></script>
+
+    <!-- Jarallax -->
+    <script type="text/javascript" th:src="@{js/jarallax.min.js}"></script>
+
+    <!-- PictureFill -->
+    <script type="text/javascript" th:src="@{js/picturefill.min.js}"></script>
+
+    <!-- WayPoint -->
+    <script type="text/javascript" th:src="@{js/jquery.waypoints.min.js}"></script>
+
+    <!-- CounterUp -->
+    <script type="text/javascript" th:src="@{js/jquery.counterup.min.js}"></script>
+
+    <!-- Picker(Selector de fecha y hora) -->
+    <script type="text/javascript" th:src="@{js/pickadata.js/picker.js}"></script>
+
+    <!-- Picker(Selector de fecha) -->
+    <script type="text/javascript" th:src="@{js/pickadata.js/picker.date.js}"></script>
+
+    <!-- PickerTime(Selector hora y minutos) -->
+    <script type="text/javascript" th:src="@{js/pickadata.js/picker.time.js}"></script>
+
+    <!-- Parsley (Crea validacion formularios) -->
+    <script type="text/javascript" th:src="@{js/parsley.min.js}"></script>
+    <script type="text/javascript" th:src="@{js/parsley.es.js}"></script>
+
+    <!-- Stickit -->
+    <script type="text/javascript" th:src="@{js/jquery.stickit.min.js}"></script>
+
+    <!-- PageToScroll(Efecto scroll entre las secciones) -->
+    <script type="text/javascript" th:src="@{js/jquery.malihu.PageScroll2id.min.js}"></script>
+
+    <!-- Archivo para confiugurar mis scripts -->
+    <script th:src="@{js/mis-scripts.js}"></script>    	
+</body>
+</html>

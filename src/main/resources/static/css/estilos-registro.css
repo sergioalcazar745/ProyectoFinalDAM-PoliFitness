@@ -1,0 +1,45 @@
+/*.row{
+	border: 1px solid blue;
+}
+
+.row > *{
+	border: 1px solid red;
+}*/
+
+body{
+	background-image: url('../images/fondo-viejo-recortada.png');
+	background-position: center;
+}
+
+.div_file{
+	position:relative;
+	width: 150px;
+	background-color:  #595959 !important;
+	cursor:pointer;
+}
+
+.div_file input[type="file"]{
+	position:absolute;
+	top:0px;
+	right:0px;
+	left:0px;
+	bottom:0px;
+	width:100%;
+	height:100%;
+	opacity: 0;
+	cursor:pointer;
+}
+
+.picker__select--month, .picker__select--year {
+    padding: .4rem;
+}
+
+#logo-form{
+	margin-left: 50%;
+    transform: translate(-50%);
+}
+
+#form-changePassword{
+	width: 10%;
+    margin: auto;
+}

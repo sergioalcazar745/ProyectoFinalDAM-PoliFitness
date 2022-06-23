@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<title>PoliFitness. Centro deportivo</title>
+
+<!-- Required meta tags -->
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="shortcut icon" type="image/png"
+	th:href="@{images/nuevo/icono.png}">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{css/bootstrap.min.css}">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" type="text/css" th:href="@{css/all.min.css}">
+
+<!-- Swiper -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{css/swiper-bundle.min.css}">
+
+<!-- VenoBox -->
+<link rel="stylesheet" type="text/css" th:href="@{css/venobox.css}">
+
+<!-- Jarallax -->
+<link rel="stylesheet" type="text/css" th:href="@{css/jarallax.css}">
+
+<!-- Pickadate -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{js/pickadata.js/themes/default.css}">
+
+<!-- Date Pickadate -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{js/pickadata.js/themes/default.date.css}">
+
+<!-- Date Pickadate -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{js/pickadata.js/themes/default.time.css}">
+
+<!-- Fuente -->
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Lato:400,700">
+
+<!-- Mi estilos css -->
+<link rel="stylesheet" type="text/css" th:href="@{css/estilos.css}">
+<link rel="stylesheet" type="text/css" th:href="@{css/estilos-cuenta.css}">
+</head>
+
+<body>
+
+	<nav id="menu-navegacion"
+		class="navbar navbar-dark bg-secondary navbar-expand-md">
+		<div class="container pr-0">
+			<div class="col-auto">
+				<a href="/"> <img class="img-fluid"
+					th:src="@{images/nuevo/logo-blanco.png}" alt="Logo del sitio"
+					width="200">
+				</a>
+			</div>
+
+			<a sec:authorize="!isAuthenticated()" th:href="login"
+				class="btn btn-outline-primary order-md-1">Sign in</a>
+
+			<div sec:authorize="isAuthenticated()"
+				class="dropdown show order-md-1">
+				<a class="btn btn-dropdown dropdown-toggle" href="#" role="button"
+					id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false"> <!--<p sec:authorize="isAuthenticated()">
+                	<small sec:authentication="name"></small>
+                </p>--> <img th:src="@{'/upload/' + ${cliente.foto}}"
+					class="dropdown-toggle img-fluid" width="40px" height="40px"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
+				</a>
+
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+			  	<a class="dropdown-item" th:href="cuenta">Mi Cuenta</a>
+			    <a class="dropdown-item" th:href="@{/mis-productos}">Mis productos</a>
+			  	<form id="form-logout" th:action="@{/logout}" method="post">
+			  		<button class="dropdown-item" onclick="document.getElementById('form-logout').submit" type="submit">Sign Out</button>
+			  	</form>
+			  </div>
+			</div>
+		</div>
+	</nav>
+	
+	<div class="alert alert-danger" th:if="${danger != null}" th:text="${danger}"><button class="close" data-dismiss="alert"><span>&times;</span></button></div>
+
+	<section id="cuenta-usuario">
+		<div class="container">
+		<div class="alert alert-success" th:if="${success != null}" th:text="${success}"><button class="close" data-dismiss="alert"><span>&times;</span></button></div>
+			<h2 class="display-4 text-dark py-3 border-bottom">Cuenta</h2>
+			<div class="row justify-content-center">
+				<div class="col-12">
+					<form id="form-cuenta" th:action="@{/cuenta}" class="p-3 mt-3 mb-5" th:object="${cliente}" method="post" enctype="multipart/form-data">
+					<input type="hidden" th:field="*{id}" id="id">
+						<div class="form-group form-row">
+							<label for="nombre" class="col-2 col-form-label">Nombre: </label>
+							<div class="input-group col-10">
+								<input type="text" name="nombre" id="nombre"
+									class="form-control" th:field="*{nombre}">
+							</div>
+							<div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="text-danger"></div>
+						</div>
+
+						<div class="form-group form-row mt-2">
+							<label for="apellidos" class="col-2 col-form-label">Apellidos: </label>
+							<div class="input-group col-10">
+								<input type="text" name="apellidos" id="apellidos"
+									class="form-control" th:field="*{apellidos}">
+							</div>
+							<div th:if="${#fields.hasErrors('apellidos')}" th:errors="*{apellidos}" class="text-danger"></div>
+						</div>
+
+						<div class="form-group form-row mt-2">
+							<label for="telefono" class="col-2 col-form-label">Teléfono: </label>
+							<div class="input-group col-10">
+								<input type="number" inputmode="numeric" pattern="[0-9]{9}"
+									name="telefono" id="telefono-registro" class="form-control"
+									th:field="*{telefono}" placeholder="555-555-555">
+							</div>
+							<div th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}" class="text-danger"></div>
+						</div>
+
+						<div class="form-group form-row mt-2">
+							<label for="email" class="col-2 col-form-label">Email: </label>
+							<div class="input-group col-10">
+								<input type="text" name="email" class="form-control" id="email"
+									th:field="*{email}">
+							</div>
+							<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></div>
+						</div>
+
+						<div class="form-group form-row mt-2">
+							<label for="password" class="col-2 col-form-label">Contraseña: </label>
+							<div class="input-group col-10">
+								<input type="password" name="password" class="form-control" id="password" th:value="password" readonly>
+								<!--<input th:if="${valor != null}" type="password" name="password" class="form-control" id="password" th:value="${valor}" disabled="disabled">-->
+								<label th:onclick="window.location.href='/cuenta/restablecerContraseña'" class="input-group-append input-group-cita" for="password"> <span class="input-group-text"><i class="fas fa-key"></i></span></label>
+							</div>
+							<div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger"></div>
+						</div>
+
+						<div class="form-group form-row mt-2">
+							<label for="fecha-cita" class="col-2 col-form-label">Fecha de nacimiento: </label>
+							<div class="input-group col-10">
+								<input type="date" id="fecha-cita" name="fecha-cita"
+									class="form-control datepicker" th:field="*{fecha_nac}">
+								<label class="input-group-append input-group-cita"
+									for="fecha-cita"> <span class="input-group-text" style="height: calc(1.5em + .75rem + 2px);"><i
+										class="far fa-calendar-alt"></i></span>
+								</label>
+							</div>
+							<div th:if="${#fields.hasErrors('fecha_nac')}" th:errors="*{fecha_nac}" class="error-fecha-cita text-danger"></div>
+						</div>
+
+						<div class="col-12 my-4">
+							<div class="image-preview mt-2"><img style="max-width: 500px; max-height: 500px;" th:src="@{'/upload/' + ${cliente.foto}}" class="img-fluid"/></div>
+							<div class="div_file pb-1 rounded mt-2">
+								<p class="text-center d-block m-auto text-white">Seleccionar foto</p>
+								<input type="file" name="file" class="pt-3" id="file"
+									value="Añadir foto">
+							</div>
+						</div>
+
+						<div class="col-12 mt-2 text-center">
+							<button type="submit" class="btn btn-primary">Guardar cambios</button>
+							<!--<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#changePasswordModal">Change Password</button>-->
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	<footer id="pie-pagina" class="bg-dark text-truncate mt-5">
+        <div class="container">
+            <div class="row align-items-md-center">
+                <div class="columna-inclinada col-12 col-md-6 col-xl-5 py-2">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2 class="h1 font-weight-bold text-light">Soporte</h2>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-briefcase-medical fa-4x text-black-50"></i>
+                        </div>
+                        <div class="col-auto text-black-50">
+                            <h6 class="h3">+34 915792365</h6>
+                            <p>Servicio de ayuda esta disponible 24h/7.</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="lista-pie-pagina"
+                    class="col-12 col-md-6 col-xl-7 py-2 text-center text-md-right text-xl-right">
+                    <ul class="list-unstyled d-inline-flex small text-uppercase">
+                        <li><a href="#">Inicio</a></li>
+                        <li><a href="#">Nosotros</a></li>
+                        <li><a href="#">Politicas de privacidad</a></li>
+                    </ul>
+                    <p class="text-white">&copy;2021. Todos los derechos reservados</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+	
+	<script th:src="@{js/jquery-3.6.0.min.js}"></script>
+    <script th:src="@{js/popper.min.js}"></script>
+    <script th:src="@{js/bootstrap.min.js}"></script>
+
+    <!-- JS Swiper -->
+    <script th:src="@{js/swiper-bundle.min.js}"></script>
+
+    <!-- VenoBox -->
+    <script type="text/javascript" th:src="@{js/venobox.min.js}"></script>
+
+    <!-- Jarallax -->
+    <script type="text/javascript" th:src="@{js/jarallax.min.js}"></script>
+
+    <!-- PictureFill -->
+    <script type="text/javascript" th:src="@{js/picturefill.min.js}"></script>
+
+    <!-- WayPoint -->
+    <script type="text/javascript" th:src="@{js/jquery.waypoints.min.js}"></script>
+
+    <!-- CounterUp -->
+    <script type="text/javascript" th:src="@{js/jquery.counterup.min.js}"></script>
+
+    <!-- Picker(Selector de fecha y hora) -->
+    <script type="text/javascript" th:src="@{js/pickadata.js/picker.js}"></script>
+
+    <!-- Picker(Selector de fecha) -->
+    <script type="text/javascript" th:src="@{js/pickadata.js/picker.date.js}"></script>
+
+    <!-- PickerTime(Selector hora y minutos) -->
+    <script type="text/javascript" th:src="@{js/pickadata.js/picker.time.js}"></script>
+
+    <!-- Parsley (Crea validacion formularios) -->
+    <script type="text/javascript" th:src="@{js/parsley.min.js}"></script>
+    <script type="text/javascript" th:src="@{js/parsley.es.js}"></script>
+
+    <!-- Stickit -->
+    <script type="text/javascript" th:src="@{js/jquery.stickit.min.js}"></script>
+
+    <!-- PageToScroll(Efecto scroll entre las secciones) -->
+    <script type="text/javascript" th:src="@{js/jquery.malihu.PageScroll2id.min.js}"></script>
+
+    <!-- Archivo para confiugurar mis scripts -->
+    <script th:src="@{js/mis-scripts.js}"></script>    	
+</body>
+</html>
